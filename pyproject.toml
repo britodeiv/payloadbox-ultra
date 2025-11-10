@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "payloadbox-ultra"
+version = "1.0.0"
+description = "XSS Payload list — Ultra edition"
+authors = [{name="britodeiv", email="britodeiv@live.com"}]
+dependencies = ["PyYAML","jsonschema"]

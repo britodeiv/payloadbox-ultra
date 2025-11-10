@@ -1,0 +1,8 @@
+venv/
+.venv/
+__pycache__/
+exports/
+docs/data/
+*.pyc
+.env
+payloadbox-ultra.zip

@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>PayloadBox Ultra — Search</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header><h1>PayloadBox Ultra — Search</h1></header>
+  <main>
+    <div id="controls">
+      <input id="q" placeholder="Buscar payload, tag, vector, context..." />
+      <select id="vector"><option value="">--vector--</option></select>
+      <select id="context"><option value="">--context--</option></select>
+      <label>Min score <input id="minscore" type="range" min="0" max="100" value="0"/></label>
+    </div>
+    <section id="results"></section>
+  </main>
+  <script src="https://unpkg.com/lunr/lunr.js"></script>
+  <script src="search.js"></script>
+</body>
+</html>

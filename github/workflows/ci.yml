@@ -1,0 +1,45 @@
+name: CI & Pages
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with: python-version: '3.11'
+      - name: Install deps
+        run: pip install jsonschema pyyaml pytest
+      - name: Validate schema
+        run: |
+          python - <<'PY'
+import json,sys
+from jsonschema import validate, ValidationError
+schema=json.load(open('payloads/payloads.schema.json',encoding='utf-8'))
+data=json.load(open('payloads/payloads.json',encoding='utf-8'))
+try:
+  validate(instance=data, schema=schema)
+  print("Schema válido")
+except ValidationError as e:
+  print("Falha validação schema:", e); sys.exit(1)
+PY
+      - name: Run tests
+        run: pytest -q
+  pages:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export payloads to docs/data
+        run: python tools/exporters.py --input payloads/payloads.json --outdir docs/data --formats jsonl,yaml,xml,csv
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
