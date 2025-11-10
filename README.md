@@ -23,4 +23,4 @@ Como começar (local)
 5. Servir docs localmente:
    python -m http.server 8000 --directory docs
 
-Licença: MIT
+
